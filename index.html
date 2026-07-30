@@ -4,15 +4,12 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MVP SaaS - Construa com IA</title>
+    <title>MVP SaaS - Minimalista</title>
     <!-- Phosphor Icons for modern UI icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
-    <!-- ThreeJS Canvas -->
-    <div id="webgl-container"></div>
-
     <!-- UI Overlay -->
     <div id="app">
       <header>
@@ -20,37 +17,45 @@
           <i class="ph-fill ph-heart" style="color: #ff4757; font-size: 1.5rem;"></i>
           <span>Lovable MVP</span>
         </div>
-        <ul class="nav-links">
-          <li>Soluções <i class="ph ph-caret-down" style="font-size: 0.8rem; opacity: 0.7;"></i></li>
-          <li>Recursos <i class="ph ph-caret-down" style="font-size: 0.8rem; opacity: 0.7;"></i></li>
-          <li>Comunidade</li>
-          <li>Empresas</li>
-          <li>Preços</li>
-          <li>Segurança</li>
-        </ul>
-        <div class="header-actions">
-          <button class="btn btn-secondary">Entrar</button>
-          <button class="btn btn-primary">Começar</button>
-        </div>
       </header>
 
       <main class="hero">
-        <h1>Crie algo com a IA</h1>
-        <p>Crie apps e sites conversando com a IA</p>
+        <h1 class="kimi-title">KIMI</h1>
         
-        <div class="input-container">
-          <button class="icon-btn">
-            <i class="ph ph-plus" style="font-size: 1.1rem;"></i>
-          </button>
-          <input type="text" class="hero-input" placeholder="Peça à IA para criar um blog sobre..." />
-          <button class="build-btn">
-            Construir <i class="ph ph-caret-down" style="font-size: 0.8rem;"></i>
-          </button>
-          <button class="icon-btn" style="background: transparent; border: none; padding-left: 0.5rem; color: var(--text-secondary);">
-            <i class="ph ph-microphone" style="font-size: 1.2rem;"></i>
-          </button>
+        <div class="input-card">
+          <textarea class="hero-textarea" placeholder="Pergunte qualquer coisa..." rows="4"></textarea>
+          
+          <div class="input-actions">
+            <button class="icon-btn action-left">
+              <i class="ph ph-plus" style="font-size: 1.2rem;"></i>
+            </button>
+            <div class="actions-right">
+              <button class="build-btn">
+                Instantâneo <span class="highlight">Alto</span> <i class="ph ph-caret-down" style="font-size: 0.8rem;"></i>
+              </button>
+              <button class="icon-btn submit-btn">
+                <i class="ph ph-arrow-up" style="font-size: 1.1rem; color: #fff;"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="suggestion-chips">
+          <button class="chip"><i class="ph ph-git-branch"></i> Cluster</button>
+          <button class="chip"><i class="ph ph-presentation-chart"></i> Slides</button>
+          <button class="chip"><i class="ph ph-magnifying-glass"></i> Pesquisa aprofundada</button>
+          <button class="chip"><i class="ph ph-globe"></i> Sites</button>
+          <button class="chip"><i class="ph ph-file-text"></i> Documentos</button>
+          <button class="chip"><i class="ph ph-table"></i> Planilhas</button>
         </div>
       </main>
+      
+      <footer class="footer-inspirations">
+        <button class="inspiration-btn">
+          <span><i class="ph ph-lightbulb"></i> Explorar inspirações</span>
+          <span class="role-text">Role para explorar <i class="ph ph-caret-up"></i></span>
+        </button>
+      </footer>
     </div>
     <script type="module" src="/main.js"></script>
   </body>

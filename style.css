@@ -1,14 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg-dark: #0a0a0a;
+  --bg-dark: #121212;
+  --card-bg: #1e1e1e;
   --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --glass-bg: rgba(20, 20, 20, 0.6);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --btn-light: #ffffff;
-  --btn-light-text: #000000;
-  --btn-dark: rgba(255, 255, 255, 0.1);
+  --text-secondary: rgba(255, 255, 255, 0.5);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --chip-bg: rgba(255, 255, 255, 0.03);
 }
 
 * {
@@ -20,24 +18,10 @@
 body {
   font-family: 'Inter', sans-serif;
   color: var(--text-primary);
-  background-color: var(--bg-dark); /* fallback */
-  overflow: hidden; /* threejs canvas will cover everything */
+  background-color: var(--bg-dark);
 }
 
-/* ThreeJS Canvas */
-#webgl-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-}
-
-/* Overlay UI */
 #app {
-  position: relative;
-  z-index: 1;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -47,9 +31,9 @@ body {
 /* Header */
 header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  padding: 1.5rem 3rem;
+  padding: 1.5rem 2rem;
 }
 
 .logo-container {
@@ -57,63 +41,8 @@ header {
   align-items: center;
   gap: 0.5rem;
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   cursor: pointer;
-}
-
-.nav-links {
-  display: flex;
-  gap: 2rem;
-  list-style: none;
-}
-
-.nav-links li {
-  font-size: 0.95rem;
-  font-weight: 500;
-  cursor: pointer;
-  color: var(--text-primary);
-  transition: opacity 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.2rem;
-}
-
-.nav-links li:hover {
-  opacity: 0.8;
-}
-
-.header-actions {
-  display: flex;
-  gap: 1rem;
-}
-
-.btn {
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  border: none;
-  transition: all 0.2s ease;
-}
-
-.btn-secondary {
-  background-color: transparent;
-  color: var(--text-primary);
-  border: 1px solid var(--glass-border);
-}
-
-.btn-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-.btn-primary {
-  background-color: var(--btn-light);
-  color: var(--btn-light-text);
-}
-
-.btn-primary:hover {
-  background-color: #f0f0f0;
 }
 
 /* Hero Section */
@@ -121,97 +50,177 @@ header {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   text-align: center;
-  padding: 2rem;
-  margin-top: -5rem; /* pull up slightly */
+  padding: 5rem 2rem 2rem 2rem;
 }
 
-.hero h1 {
-  font-size: 4.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  letter-spacing: -0.03em;
+.kimi-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  margin-bottom: 2rem;
+  color: #fff;
 }
 
-.hero p {
-  font-size: 1.2rem;
-  color: var(--text-secondary);
-  margin-bottom: 3.5rem;
-  font-weight: 400;
-}
-
-/* Input Box - Glassmorphism */
-.input-container {
-  background-color: #212121;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  padding: 0.6rem 0.6rem 0.6rem 1.2rem;
-  display: flex;
-  align-items: center;
+/* Input Card */
+.input-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 1.2rem 1.2rem 0.8rem 1.2rem;
   width: 100%;
-  max-width: 800px;
-  gap: 0.8rem;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  max-width: 750px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: border-color 0.2s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
 }
 
-.input-container:focus-within {
-  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.4);
-  transform: translateY(-2px);
+.input-card:focus-within {
   border-color: rgba(255, 255, 255, 0.2);
 }
 
-.icon-btn {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.icon-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: var(--text-primary);
-}
-
-.hero-input {
-  flex: 1;
+.hero-textarea {
+  width: 100%;
   background: transparent;
   border: none;
   color: var(--text-primary);
-  font-size: 1rem;
-  padding: 0.5rem;
+  font-size: 1.05rem;
   outline: none;
   font-family: inherit;
+  resize: none;
+  padding: 0.5rem;
 }
 
-.hero-input::placeholder {
+.hero-textarea::placeholder {
   color: var(--text-secondary);
+}
+
+/* Actions inside Input Card */
+.input-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.5rem;
+}
+
+.actions-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.icon-btn:hover {
+  color: var(--text-primary);
+}
+
+.action-left {
+  padding: 0.5rem;
+}
+
+.submit-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  transition: background 0.2s ease;
+}
+
+.submit-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .build-btn {
   background-color: transparent;
   color: var(--text-secondary);
   border: none;
-  font-size: 0.95rem;
-  font-weight: 500;
+  font-size: 0.85rem;
+  font-family: inherit;
   display: flex;
   align-items: center;
   gap: 0.4rem;
   cursor: pointer;
-  padding: 0.5rem 1rem;
-  transition: color 0.2s ease;
-  border-right: 1px solid rgba(255,255,255,0.1);
 }
 
-.build-btn:hover {
+.highlight {
+  color: #9e9e9e;
+}
+
+/* Suggestion Chips */
+.suggestion-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+  max-width: 800px;
+}
+
+.chip {
+  background: var(--chip-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chip:hover {
+  background: rgba(255, 255, 255, 0.08);
   color: var(--text-primary);
+}
+
+/* Footer Inspiration */
+.footer-inspirations {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.inspiration-btn {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+  padding: 1rem 2rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 750px;
+  cursor: pointer;
+}
+
+.inspiration-btn span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.inspiration-btn .role-text {
+  font-size: 0.8rem;
+  opacity: 0.6;
 }
