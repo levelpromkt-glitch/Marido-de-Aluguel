@@ -2,8 +2,11 @@ const inputField = document.querySelector('.hero-textarea');
 const sendBtn = document.getElementById('send-btn');
 
 function handleSend() {
-  if (inputField.value.trim() !== '') {
-    alert('Pedido recebido: ' + inputField.value);
+  const message = inputField.value.trim();
+  if (message !== '') {
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/5591920025706?text=${encodedMessage}`;
+    window.open(whatsappUrl, '_blank');
     inputField.value = '';
   }
 }
