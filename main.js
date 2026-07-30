@@ -85,6 +85,70 @@ inputField.addEventListener('blur', () => {
 });
 
 // ----------------------------------------------------
+// WEB SPEECH API (Voice to Text)
+// ----------------------------------------------------
+const micBtn = document.getElementById('mic-btn');
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if (SpeechRecognition) {
+  const recognition = new SpeechRecognition();
+  recognition.lang = 'pt-BR';
+  recognition.interimResults = false;
+  
+  let isRecording = false;
+
+  micBtn.addEventListener('click', () => {
+    if (isRecording) {
+      recognition.stop();
+    } else {
+      recognition.start();
+    }
+  });
+
+  recognition.onstart = () => {
+    isRecording = true;
+    micBtn.style.color = '#ff4757'; // Change to red to indicate recording
+    inputField.value = '';
+    inputField.setAttribute('placeholder', 'Ouvindo... Fale agora.');
+    isFocused = true; // Pause typing effect
+    clearTimeout(typingTimeout);
+  };
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    // Capitalize first letter
+    inputField.value = transcript.charAt(0).toUpperCase() + transcript.slice(1);
+  };
+
+  recognition.onerror = (event) => {
+    console.error('Speech recognition error:', event.error);
+    resetMicState();
+    if(event.error === 'not-allowed') {
+      alert('Permita o acesso ao microfone no seu navegador para usar esta função.');
+    }
+  };
+
+  recognition.onend = () => {
+    resetMicState();
+  };
+
+  function resetMicState() {
+    isRecording = false;
+    micBtn.style.color = ''; // Reset color
+    isFocused = false;
+    if (inputField.value.trim() === '') {
+      typeEffect();
+    } else {
+      inputField.setAttribute('placeholder', '');
+    }
+  }
+} else {
+  micBtn.addEventListener('click', () => {
+    alert('O ditado por voz não é suportado pelo seu navegador (tente no Chrome ou Safari).');
+  });
+}
+
+// ----------------------------------------------------
 // STORIES LOGIC
 // ----------------------------------------------------
 const storiesImages = [
