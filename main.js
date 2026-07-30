@@ -1,14 +1,21 @@
 const inputField = document.querySelector('.hero-textarea');
+const sendBtn = document.getElementById('send-btn');
+
+function handleSend() {
+  if (inputField.value.trim() !== '') {
+    alert('Pedido recebido: ' + inputField.value);
+    inputField.value = '';
+  }
+}
 
 inputField.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && !e.shiftKey) {
     e.preventDefault();
-    if (inputField.value.trim() !== '') {
-      alert('Pedido recebido: ' + inputField.value);
-      inputField.value = '';
-    }
+    handleSend();
   }
 });
+
+sendBtn.addEventListener('click', handleSend);
 
 // Typing effect logic
 const phrases = [
