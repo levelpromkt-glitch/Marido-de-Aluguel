@@ -96,10 +96,12 @@ const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogni
 if (SpeechRecognition) {
   const recognition = new SpeechRecognition();
   recognition.lang = 'pt-BR';
-  recognition.interimResults = false;
+  recognition.interimResults = true; // Show text as they speak
+  recognition.continuous = true; // Keep listening until explicitly stopped
   
   let isRecording = false;
   let isAudioMode = false;
+  let finalTranscript = '';
 
   // Toggle Audio Mode on Mic Button Click
   micBtn.addEventListener('click', (e) => {
@@ -107,15 +109,13 @@ if (SpeechRecognition) {
     isAudioMode = !isAudioMode;
     
     if (isAudioMode) {
-      micBtn.style.color = '#ff4757'; // Selected state
+      micBtn.style.color = '#ff4757';
       micBtn.style.backgroundColor = 'rgba(255, 71, 87, 0.1)';
       micBtn.style.borderRadius = '50%';
       
       inputField.classList.add('hidden');
       audioUi.classList.remove('hidden');
-      audioUiText.innerHTML = '<strong>Segure para falar</strong>';
-      audioUiText.style.color = '#fff';
-      recordingWaves.classList.add('hidden');
+      resetMicState();
       
       clearTimeout(typingTimeout);
     } else {
@@ -130,8 +130,10 @@ if (SpeechRecognition) {
 
   function startRecording(e) {
     if (!isAudioMode) return;
-    if (e) e.preventDefault();
+    if (e && e.cancelable) e.preventDefault();
     if (isRecording) return;
+    
+    finalTranscript = '';
     try {
       recognition.start();
     } catch (err) {}
@@ -139,12 +141,14 @@ if (SpeechRecognition) {
 
   function stopRecording(e) {
     if (!isAudioMode) return;
-    if (e) e.preventDefault();
+    if (e && e.cancelable) e.preventDefault();
     if (!isRecording) return;
+    
+    // Stop recognition; this will fire onend shortly after
     recognition.stop();
   }
 
-  // Bind hold-to-talk to the AUDIO UI, not the input field
+  // Bind hold-to-talk to the AUDIO UI
   audioUi.addEventListener('mousedown', startRecording);
   audioUi.addEventListener('mouseup', stopRecording);
   audioUi.addEventListener('mouseleave', stopRecording);
@@ -155,20 +159,31 @@ if (SpeechRecognition) {
 
   recognition.onstart = () => {
     isRecording = true;
-    audioUiText.innerHTML = 'Solte para transcrever...';
+    finalTranscript = '';
+    audioUiText.innerHTML = 'Solte para enviar...';
     audioUiText.style.color = '#a3a3a3';
     recordingWaves.classList.remove('hidden');
   };
 
   recognition.onresult = (event) => {
-    const transcript = event.results[0][0].transcript;
-    inputField.value = transcript.charAt(0).toUpperCase() + transcript.slice(1);
-    resetAudioMode(); // Automatically exit audio mode so user can edit/send
+    let interimTranscript = '';
+    for (let i = event.resultIndex; i < event.results.length; ++i) {
+      if (event.results[i].isFinal) {
+        finalTranscript += event.results[i][0].transcript;
+      } else {
+        interimTranscript += event.results[i][0].transcript;
+      }
+    }
+    
+    const combined = (finalTranscript + interimTranscript).trim();
+    if (combined) {
+      audioUiText.innerHTML = combined; // Show text being spoken in real-time
+      audioUiText.style.color = '#fff';
+    }
   };
 
   recognition.onerror = (event) => {
     console.error('Speech recognition error:', event.error);
-    resetMicState();
     if(event.error === 'not-allowed') {
       alert('Permita o acesso ao microfone no seu navegador para usar esta função.');
       resetAudioMode();
@@ -176,7 +191,19 @@ if (SpeechRecognition) {
   };
 
   recognition.onend = () => {
-    resetMicState();
+    isRecording = false;
+    
+    if (isAudioMode) {
+      const currentText = audioUiText.innerText.trim();
+      
+      // If we captured speech, set it to the input field and exit audio mode
+      if (currentText && currentText !== 'Solte para enviar...' && currentText !== 'Segure para falar') {
+        inputField.value = currentText.charAt(0).toUpperCase() + currentText.slice(1);
+        resetAudioMode();
+      } else {
+        resetMicState(); // Nothing captured, just reset the UI to wait again
+      }
+    }
   };
 
   function resetMicState() {
@@ -188,6 +215,7 @@ if (SpeechRecognition) {
 
   function resetAudioMode() {
     isAudioMode = false;
+    isRecording = false;
     micBtn.style.color = '';
     micBtn.style.backgroundColor = '';
     
