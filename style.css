@@ -136,7 +136,7 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.6rem; /* Tighter like instagram */
+  gap: 0.4rem; /* Tighter gap for new elements */
   margin-bottom: 2rem;
 }
 
@@ -195,6 +195,34 @@ header {
   font-weight: 600;
   color: #fafafa;
   letter-spacing: 0;
+}
+
+.profile-bio {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
+  margin-top: -0.2rem;
+}
+
+.location-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #fff;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  transition: background 0.2s;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.location-tag:hover {
+  background: rgba(255, 255, 255, 0.15);
 }
 
 /* Input Card */
