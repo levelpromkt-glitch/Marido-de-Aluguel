@@ -4,11 +4,11 @@ const sendBtn = document.getElementById('send-btn');
 function handleSend() {
   const message = inputField.value.trim();
   if (message !== '') {
-    // 1. Hide profile elements and input card
+    // 1. Hide profile elements and input wrapper
     document.getElementById('location-tag').classList.add('hidden');
     document.getElementById('profile-name').classList.add('hidden');
     document.getElementById('profile-bio').classList.add('hidden');
-    document.querySelector('.input-card').classList.add('hidden');
+    document.getElementById('input-elements-wrapper').classList.add('hidden');
     
     // 2. Show Chat History
     const chatHistory = document.getElementById('chat-history');
@@ -24,9 +24,17 @@ function handleSend() {
     
     // 4. System Reply 1 (Delay 1.2s)
     setTimeout(() => {
+      const messages = [
+        "Opa, estamos buscando o profissional perfeito pra o que você está pedindo...",
+        "Legal! Deixa com a gente, estamos procurando o melhor especialista pra isso...",
+        "Anotado! Só um instante enquanto localizamos um profissional disponível...",
+        "Tudo certo. Estamos filtrando os profissionais mais bem avaliados para o seu pedido..."
+      ];
+      const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+      
       const sysBubble1 = document.createElement('div');
       sysBubble1.className = 'chat-bubble system-bubble';
-      sysBubble1.textContent = 'Opa, estamos buscando o profissional perfeito pra o que você está pedindo...';
+      sysBubble1.textContent = randomMsg;
       chatHistory.appendChild(sysBubble1);
       chatHistory.scrollTop = chatHistory.scrollHeight;
     }, 1200);
@@ -39,7 +47,7 @@ function handleSend() {
         Encontramos! Toque no botão abaixo para falar com o profissional.
         <a href="#" class="chat-action-btn" id="whatsapp-link">
           <i class="ph-fill ph-whatsapp-logo"></i>
-          Falar com Profissional
+          Chamar no Whatsapp
         </a>
       `;
       chatHistory.appendChild(sysBubble2);
