@@ -85,7 +85,7 @@ inputField.addEventListener('blur', () => {
 });
 
 // ----------------------------------------------------
-// WEB SPEECH API (Voice to Text) - Push to Talk
+// WEB SPEECH API (Voice to Text) - Toggle & Hold-to-Talk
 // ----------------------------------------------------
 const micBtn = document.getElementById('mic-btn');
 const recordingWaves = document.getElementById('recording-waves');
@@ -97,11 +97,33 @@ if (SpeechRecognition) {
   recognition.interimResults = false;
   
   let isRecording = false;
+  let isAudioMode = false;
 
-  // Prevent default context menu on mobile long press
-  micBtn.addEventListener('contextmenu', e => e.preventDefault());
+  // Toggle Audio Mode on Mic Button Click
+  micBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    isAudioMode = !isAudioMode;
+    
+    if (isAudioMode) {
+      micBtn.style.color = '#ff4757'; // Selected state
+      micBtn.style.backgroundColor = 'rgba(255, 71, 87, 0.1)';
+      micBtn.style.borderRadius = '50%';
+      inputField.value = '';
+      inputField.setAttribute('placeholder', 'Segure para falar...');
+      inputField.style.cursor = 'pointer';
+      clearTimeout(typingTimeout);
+    } else {
+      resetAudioMode();
+    }
+  });
+
+  // Prevent context menu on long press
+  inputField.addEventListener('contextmenu', e => {
+    if (isAudioMode) e.preventDefault();
+  });
 
   function startRecording(e) {
+    if (!isAudioMode) return;
     if (e) e.preventDefault();
     if (isRecording) return;
     try {
@@ -110,27 +132,26 @@ if (SpeechRecognition) {
   }
 
   function stopRecording(e) {
+    if (!isAudioMode) return;
     if (e) e.preventDefault();
     if (!isRecording) return;
-    recognition.stop(); // Stops recording and triggers onresult
+    recognition.stop();
   }
 
-  // Mouse events
-  micBtn.addEventListener('mousedown', startRecording);
-  micBtn.addEventListener('mouseup', stopRecording);
-  micBtn.addEventListener('mouseleave', stopRecording);
+  // Bind hold-to-talk to the INPUT FIELD (Chat), not the mic button
+  inputField.addEventListener('mousedown', startRecording);
+  inputField.addEventListener('mouseup', stopRecording);
+  inputField.addEventListener('mouseleave', stopRecording);
 
-  // Touch events for mobile
-  micBtn.addEventListener('touchstart', startRecording, { passive: false });
-  micBtn.addEventListener('touchend', stopRecording, { passive: false });
-  micBtn.addEventListener('touchcancel', stopRecording, { passive: false });
+  inputField.addEventListener('touchstart', startRecording, { passive: false });
+  inputField.addEventListener('touchend', stopRecording, { passive: false });
+  inputField.addEventListener('touchcancel', stopRecording, { passive: false });
 
   recognition.onstart = () => {
     isRecording = true;
-    micBtn.style.color = '#ff4757';
     inputField.value = '';
-    inputField.setAttribute('placeholder', 'Solte para enviar...');
-    inputField.style.opacity = '0.2'; // Dim text area
+    inputField.setAttribute('placeholder', 'Ouvindo... solte para transcrever.');
+    inputField.style.opacity = '0.2'; 
     recordingWaves.classList.remove('hidden');
     isFocused = true;
     clearTimeout(typingTimeout);
@@ -138,15 +159,16 @@ if (SpeechRecognition) {
 
   recognition.onresult = (event) => {
     const transcript = event.results[0][0].transcript;
-    // Capitalize first letter
     inputField.value = transcript.charAt(0).toUpperCase() + transcript.slice(1);
+    resetAudioMode(); // Automatically exit audio mode so user can edit/send
   };
 
   recognition.onerror = (event) => {
     console.error('Speech recognition error:', event.error);
-    resetMicState();
+    resetMicState(); // Just stop recording, don't necessarily exit audio mode entirely unless denied
     if(event.error === 'not-allowed') {
       alert('Permita o acesso ao microfone no seu navegador para usar esta função.');
+      resetAudioMode();
     }
   };
 
@@ -156,9 +178,19 @@ if (SpeechRecognition) {
 
   function resetMicState() {
     isRecording = false;
-    micBtn.style.color = '';
     recordingWaves.classList.add('hidden');
     inputField.style.opacity = '1';
+    
+    if (isAudioMode && inputField.value.trim() === '') {
+      inputField.setAttribute('placeholder', 'Segure para falar...');
+    }
+  }
+
+  function resetAudioMode() {
+    isAudioMode = false;
+    micBtn.style.color = '';
+    micBtn.style.backgroundColor = '';
+    inputField.style.cursor = '';
     isFocused = false;
     if (inputField.value.trim() === '') {
       typeEffect();

@@ -173,8 +173,8 @@ header {
 
 .verified-badge {
   position: absolute;
-  bottom: 2px;
-  right: 2px;
+  bottom: 4px;
+  right: 6px;
   width: 22px;
   height: 22px;
   display: flex;
