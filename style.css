@@ -262,6 +262,41 @@ header {
   font-weight: 500;
 }
 
+/* Sound Waves Animation */
+.recording-waves {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  height: 24px;
+  z-index: 10;
+}
+
+.recording-waves.hidden {
+  display: none;
+}
+
+.wave {
+  width: 4px;
+  height: 100%;
+  background-color: #ff4757;
+  border-radius: 2px;
+  animation: bounce-wave 1s ease-in-out infinite;
+}
+
+.wave:nth-child(2) { animation-delay: 0.1s; }
+.wave:nth-child(3) { animation-delay: 0.2s; }
+.wave:nth-child(4) { animation-delay: 0.3s; }
+.wave:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes bounce-wave {
+  0%, 100% { height: 30%; }
+  50% { height: 100%; }
+}
+
 /* Actions inside Input Card */
 .input-actions {
   display: flex;

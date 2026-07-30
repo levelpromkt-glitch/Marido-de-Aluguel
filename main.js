@@ -85,9 +85,10 @@ inputField.addEventListener('blur', () => {
 });
 
 // ----------------------------------------------------
-// WEB SPEECH API (Voice to Text)
+// WEB SPEECH API (Voice to Text) - Push to Talk
 // ----------------------------------------------------
 const micBtn = document.getElementById('mic-btn');
+const recordingWaves = document.getElementById('recording-waves');
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
 if (SpeechRecognition) {
@@ -97,20 +98,41 @@ if (SpeechRecognition) {
   
   let isRecording = false;
 
-  micBtn.addEventListener('click', () => {
-    if (isRecording) {
-      recognition.stop();
-    } else {
+  // Prevent default context menu on mobile long press
+  micBtn.addEventListener('contextmenu', e => e.preventDefault());
+
+  function startRecording(e) {
+    if (e) e.preventDefault();
+    if (isRecording) return;
+    try {
       recognition.start();
-    }
-  });
+    } catch (err) {}
+  }
+
+  function stopRecording(e) {
+    if (e) e.preventDefault();
+    if (!isRecording) return;
+    recognition.stop(); // Stops recording and triggers onresult
+  }
+
+  // Mouse events
+  micBtn.addEventListener('mousedown', startRecording);
+  micBtn.addEventListener('mouseup', stopRecording);
+  micBtn.addEventListener('mouseleave', stopRecording);
+
+  // Touch events for mobile
+  micBtn.addEventListener('touchstart', startRecording, { passive: false });
+  micBtn.addEventListener('touchend', stopRecording, { passive: false });
+  micBtn.addEventListener('touchcancel', stopRecording, { passive: false });
 
   recognition.onstart = () => {
     isRecording = true;
-    micBtn.style.color = '#ff4757'; // Change to red to indicate recording
+    micBtn.style.color = '#ff4757';
     inputField.value = '';
-    inputField.setAttribute('placeholder', 'Ouvindo... Fale agora.');
-    isFocused = true; // Pause typing effect
+    inputField.setAttribute('placeholder', 'Solte para enviar...');
+    inputField.style.opacity = '0.2'; // Dim text area
+    recordingWaves.classList.remove('hidden');
+    isFocused = true;
     clearTimeout(typingTimeout);
   };
 
@@ -134,7 +156,9 @@ if (SpeechRecognition) {
 
   function resetMicState() {
     isRecording = false;
-    micBtn.style.color = ''; // Reset color
+    micBtn.style.color = '';
+    recordingWaves.classList.add('hidden');
+    inputField.style.opacity = '1';
     isFocused = false;
     if (inputField.value.trim() === '') {
       typeEffect();
@@ -143,7 +167,8 @@ if (SpeechRecognition) {
     }
   }
 } else {
-  micBtn.addEventListener('click', () => {
+  micBtn.addEventListener('click', (e) => {
+    e.preventDefault();
     alert('O ditado por voz não é suportado pelo seu navegador (tente no Chrome ou Safari).');
   });
 }
