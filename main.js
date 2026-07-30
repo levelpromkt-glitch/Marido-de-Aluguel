@@ -1,6 +1,15 @@
 const inputField = document.querySelector('.hero-textarea');
 const sendBtn = document.getElementById('send-btn');
 
+// Preloader Logic
+window.addEventListener('load', () => {
+  const preloader = document.getElementById('preloader');
+  // Garante que o preloader seja visto por pelo menos 1.2 segundos para efeito de branding
+  setTimeout(() => {
+    preloader.classList.add('hidden');
+  }, 1200);
+});
+
 function handleSend() {
   const message = inputField.value.trim();
   if (message !== '') {
