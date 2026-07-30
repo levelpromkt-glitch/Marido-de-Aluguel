@@ -173,16 +173,16 @@ header {
 
 .verified-badge {
   position: absolute;
-  bottom: 2px;
-  right: 2px;
-  width: 32px;
-  height: 32px;
+  bottom: 0px;
+  right: 0px;
+  width: 26px;
+  height: 26px;
   background-color: #0b1120; /* Matches background so it cuts out perfectly */
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 4px; /* Creates the border effect around the badge */
+  padding: 2px; /* Thinner border effect */
 }
 
 .verified-badge svg {
