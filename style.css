@@ -166,15 +166,15 @@ header {
 
 /* Input Card */
 .input-card {
-  background-color: var(--card-bg);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  border-radius: 24px;
-  padding: 1.2rem;
+  background-color: #272727;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 36px;
+  padding: 1.2rem 1.5rem 0.6rem 1.5rem;
   width: 100%;
-  max-width: 700px;
+  max-width: 880px;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.2rem;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   box-shadow: 0 10px 40px rgba(0,0,0,0.4);
 }
@@ -197,7 +197,8 @@ header {
 }
 
 .hero-textarea::placeholder {
-  color: var(--text-secondary);
+  color: #a3a3a3;
+  font-weight: 500;
 }
 
 /* Actions inside Input Card */
