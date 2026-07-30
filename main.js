@@ -89,6 +89,8 @@ inputField.addEventListener('blur', () => {
 // ----------------------------------------------------
 const micBtn = document.getElementById('mic-btn');
 const recordingWaves = document.getElementById('recording-waves');
+const audioUi = document.getElementById('audio-ui');
+const audioUiText = document.getElementById('audio-ui-text');
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
 if (SpeechRecognition) {
@@ -108,9 +110,13 @@ if (SpeechRecognition) {
       micBtn.style.color = '#ff4757'; // Selected state
       micBtn.style.backgroundColor = 'rgba(255, 71, 87, 0.1)';
       micBtn.style.borderRadius = '50%';
-      inputField.value = '';
-      inputField.setAttribute('placeholder', 'Segure para falar...');
-      inputField.style.cursor = 'pointer';
+      
+      inputField.classList.add('hidden');
+      audioUi.classList.remove('hidden');
+      audioUiText.innerHTML = '<strong>Segure para falar</strong>';
+      audioUiText.style.color = '#fff';
+      recordingWaves.classList.add('hidden');
+      
       clearTimeout(typingTimeout);
     } else {
       resetAudioMode();
@@ -118,7 +124,7 @@ if (SpeechRecognition) {
   });
 
   // Prevent context menu on long press
-  inputField.addEventListener('contextmenu', e => {
+  audioUi.addEventListener('contextmenu', e => {
     if (isAudioMode) e.preventDefault();
   });
 
@@ -138,23 +144,20 @@ if (SpeechRecognition) {
     recognition.stop();
   }
 
-  // Bind hold-to-talk to the INPUT FIELD (Chat), not the mic button
-  inputField.addEventListener('mousedown', startRecording);
-  inputField.addEventListener('mouseup', stopRecording);
-  inputField.addEventListener('mouseleave', stopRecording);
+  // Bind hold-to-talk to the AUDIO UI, not the input field
+  audioUi.addEventListener('mousedown', startRecording);
+  audioUi.addEventListener('mouseup', stopRecording);
+  audioUi.addEventListener('mouseleave', stopRecording);
 
-  inputField.addEventListener('touchstart', startRecording, { passive: false });
-  inputField.addEventListener('touchend', stopRecording, { passive: false });
-  inputField.addEventListener('touchcancel', stopRecording, { passive: false });
+  audioUi.addEventListener('touchstart', startRecording, { passive: false });
+  audioUi.addEventListener('touchend', stopRecording, { passive: false });
+  audioUi.addEventListener('touchcancel', stopRecording, { passive: false });
 
   recognition.onstart = () => {
     isRecording = true;
-    inputField.value = '';
-    inputField.setAttribute('placeholder', 'Ouvindo... solte para transcrever.');
-    inputField.style.opacity = '0.2'; 
+    audioUiText.innerHTML = 'Solte para transcrever...';
+    audioUiText.style.color = '#a3a3a3';
     recordingWaves.classList.remove('hidden');
-    isFocused = true;
-    clearTimeout(typingTimeout);
   };
 
   recognition.onresult = (event) => {
@@ -165,7 +168,7 @@ if (SpeechRecognition) {
 
   recognition.onerror = (event) => {
     console.error('Speech recognition error:', event.error);
-    resetMicState(); // Just stop recording, don't necessarily exit audio mode entirely unless denied
+    resetMicState();
     if(event.error === 'not-allowed') {
       alert('Permita o acesso ao microfone no seu navegador para usar esta função.');
       resetAudioMode();
@@ -179,18 +182,18 @@ if (SpeechRecognition) {
   function resetMicState() {
     isRecording = false;
     recordingWaves.classList.add('hidden');
-    inputField.style.opacity = '1';
-    
-    if (isAudioMode && inputField.value.trim() === '') {
-      inputField.setAttribute('placeholder', 'Segure para falar...');
-    }
+    audioUiText.innerHTML = '<strong>Segure para falar</strong>';
+    audioUiText.style.color = '#fff';
   }
 
   function resetAudioMode() {
     isAudioMode = false;
     micBtn.style.color = '';
     micBtn.style.backgroundColor = '';
-    inputField.style.cursor = '';
+    
+    inputField.classList.remove('hidden');
+    audioUi.classList.add('hidden');
+    
     isFocused = false;
     if (inputField.value.trim() === '') {
       typeEffect();
