@@ -13,16 +13,17 @@
   padding: 0;
 }
 
-body {
+body, html {
   font-family: 'Inter', sans-serif;
   color: var(--text-primary);
   background-color: var(--bg-dark);
-  overflow: hidden;
+  overflow-x: hidden;
+  min-height: 100vh;
 }
 
 #app {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -33,68 +34,68 @@ body {
    BACKGROUND GRADIENT EFFECT
    ----------------------------- */
 .bg-gradient-container {
-  position: absolute;
+  position: fixed; /* Keep it always covering the background behind the UI */
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
   z-index: 0;
-  background-color: #0f172a; /* Dark blueish base */
+  background-color: #0b1120;
 }
 
 .bg-blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(140px);
-  opacity: 0.9;
+  filter: blur(120px);
+  opacity: 0.85;
   animation: float 12s ease-in-out infinite alternate;
 }
 
 /* Left Blue */
 .bg-blue-left {
-  width: 70vw;
-  height: 70vh;
-  background: #3b82f6; /* Vibrant Blue */
-  top: -10%;
-  left: -20%;
+  width: 60vw;
+  height: 60vh;
+  background: #3b82f6; 
+  top: -5%;
+  left: -15%;
 }
 
 /* Right Blue */
 .bg-blue-right {
-  width: 70vw;
-  height: 70vh;
-  background: #2563eb; /* Deep Blue */
-  top: -10%;
-  right: -20%;
+  width: 60vw;
+  height: 60vh;
+  background: #2563eb; 
+  top: -5%;
+  right: -15%;
   animation-delay: -6s;
 }
 
 /* Bottom Pink/Magenta */
 .bg-pink-bottom {
-  width: 140vw;
-  height: 70vh;
-  background: #ec4899; /* Vibrant Pink */
-  bottom: -30%;
-  left: -20%;
+  width: 120vw;
+  height: 60vh;
+  background: #ec4899; 
+  bottom: -20%;
+  left: -10%;
   animation-delay: -3s;
 }
 
-/* Dark center overlay to make text readable, exactly like Lovable */
+/* Dark center overlay */
 .bg-dark-center {
   position: absolute;
   top: -10%;
   left: 50%;
   transform: translateX(-50%);
   width: 100vw;
-  height: 80vh;
-  background: radial-gradient(ellipse at top center, rgba(15,15,15,0.95) 0%, rgba(15,15,15,0) 65%);
+  height: 85vh;
+  background: radial-gradient(ellipse at top center, rgba(12,12,12,0.95) 0%, rgba(12,12,12,0) 70%);
   z-index: 1;
 }
 
 @keyframes float {
   0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(2%, 4%) scale(1.05); }
+  100% { transform: translate(2%, 3%) scale(1.03); }
 }
 
 /* Header */
@@ -102,7 +103,8 @@ header {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 1.5rem 2rem;
+  padding: 1.5rem 5%;
+  width: 100%;
 }
 
 .logo-container {
@@ -110,7 +112,7 @@ header {
   align-items: center;
   gap: 0.5rem;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 3vw, 1.2rem);
   cursor: pointer;
 }
 
@@ -122,25 +124,30 @@ header {
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 2rem;
-  margin-top: -6rem; /* Center vertically slightly higher */
+  padding: 0 5%;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: -8vh; /* Pulls content up slightly for visual balance */
 }
 
 /* Badge Pill */
 .badge-pill {
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 0.4rem 1rem 0.4rem 0.4rem;
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 0.3rem 1rem 0.3rem 0.3rem;
   border-radius: 50px;
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  font-size: 0.85rem;
+  gap: 0.6rem;
+  font-size: clamp(0.75rem, 2vw, 0.85rem);
   font-weight: 500;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   cursor: pointer;
   transition: background 0.2s ease;
+  max-width: 100%;
 }
 
 .badge-pill:hover {
@@ -148,40 +155,46 @@ header {
 }
 
 .badge-new {
-  background: #3b82f6; /* Blue badge */
+  background: #3b82f6; 
   color: white;
   padding: 0.2rem 0.6rem;
   border-radius: 20px;
   font-weight: 600;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
+}
+
+.badge-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .hero-title {
-  font-size: 2.2rem;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
   font-weight: 600;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   color: #ffffff;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 /* Input Card */
 .input-card {
-  background-color: #272727;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 36px;
-  padding: 1.2rem 1.5rem 0.6rem 1.5rem;
+  background-color: #262626; /* Solid dark grey as in reference */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 28px;
+  padding: 1rem 1.2rem 0.5rem 1.2rem;
   width: 100%;
-  max-width: 880px;
+  max-width: 760px; /* Refined width for proportion */
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 .input-card:focus-within {
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 10px 50px rgba(0,0,0,0.6);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
 }
 
 .hero-textarea {
@@ -189,11 +202,12 @@ header {
   background: transparent;
   border: none;
   color: var(--text-primary);
-  font-size: 1rem;
+  font-size: clamp(0.95rem, 2.5vw, 1.05rem);
   outline: none;
   font-family: inherit;
   resize: none;
   padding: 0.5rem;
+  line-height: 1.4;
 }
 
 .hero-textarea::placeholder {
@@ -206,13 +220,13 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 0.5rem;
+  padding-top: 0.3rem;
 }
 
 .actions-right {
   display: flex;
   align-items: center;
-  gap: 1.2rem;
+  gap: 0.8rem;
 }
 
 .icon-btn {
@@ -224,6 +238,7 @@ header {
   justify-content: center;
   align-items: center;
   transition: color 0.2s ease;
+  padding: 0.4rem;
 }
 
 .icon-btn:hover {
@@ -236,9 +251,9 @@ header {
 
 .build-btn {
   background-color: transparent;
-  color: #60a5fa; /* Light Blue text for Plano */
+  color: #60a5fa; 
   border: none;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-family: inherit;
   display: flex;
   align-items: center;
@@ -246,8 +261,46 @@ header {
   cursor: pointer;
   font-weight: 500;
   transition: opacity 0.2s;
+  padding: 0.4rem;
 }
 
 .build-btn:hover {
   opacity: 0.8;
+}
+
+/* -----------------------------
+   RESPONSIVENESS (Mobile/Tablet)
+   ----------------------------- */
+@media (max-width: 768px) {
+  header {
+    padding: 1.2rem 1.5rem;
+  }
+  
+  .hero {
+    margin-top: -2vh;
+    padding: 0 1.5rem;
+  }
+  
+  .badge-pill {
+    padding: 0.3rem 0.8rem 0.3rem 0.3rem;
+  }
+  
+  .badge-text {
+    font-size: 0.75rem;
+    white-space: normal; /* allow text wrapping on very small screens */
+    text-align: left;
+  }
+  
+  .input-card {
+    border-radius: 24px;
+    padding: 0.8rem 1rem 0.4rem 1rem;
+  }
+  
+  .hero-textarea {
+    padding: 0.3rem;
+  }
+  
+  .actions-right {
+    gap: 0.5rem;
+  }
 }
