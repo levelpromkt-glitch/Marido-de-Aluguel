@@ -4,10 +4,57 @@ const sendBtn = document.getElementById('send-btn');
 function handleSend() {
   const message = inputField.value.trim();
   if (message !== '') {
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/5591920025706?text=${encodedMessage}`;
-    window.open(whatsappUrl, '_blank');
-    inputField.value = '';
+    // 1. Hide profile elements and input card
+    document.getElementById('location-tag').classList.add('hidden');
+    document.getElementById('profile-name').classList.add('hidden');
+    document.getElementById('profile-bio').classList.add('hidden');
+    document.querySelector('.input-card').classList.add('hidden');
+    
+    // 2. Show Chat History
+    const chatHistory = document.getElementById('chat-history');
+    chatHistory.classList.remove('hidden');
+    
+    // 3. Render User Bubble
+    const userBubble = document.createElement('div');
+    userBubble.className = 'chat-bubble user-bubble';
+    userBubble.textContent = message;
+    chatHistory.appendChild(userBubble);
+    
+    inputField.value = ''; // clear
+    
+    // 4. System Reply 1 (Delay 1.2s)
+    setTimeout(() => {
+      const sysBubble1 = document.createElement('div');
+      sysBubble1.className = 'chat-bubble system-bubble';
+      sysBubble1.textContent = 'Opa, estamos buscando o profissional perfeito pra o que você está pedindo...';
+      chatHistory.appendChild(sysBubble1);
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+    }, 1200);
+
+    // 5. System Reply 2 + WhatsApp CTA (Delay 3.5s)
+    setTimeout(() => {
+      const sysBubble2 = document.createElement('div');
+      sysBubble2.className = 'chat-bubble system-bubble';
+      sysBubble2.innerHTML = `
+        Encontramos! Toque no botão abaixo para falar com o profissional.
+        <a href="#" class="chat-action-btn" id="whatsapp-link">
+          <i class="ph-fill ph-whatsapp-logo"></i>
+          Falar com Profissional
+        </a>
+      `;
+      chatHistory.appendChild(sysBubble2);
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+      
+      // Bind WhatsApp link
+      const encodedMessage = encodeURIComponent(message);
+      const whatsappUrl = `https://wa.me/5591920025706?text=${encodedMessage}`;
+      const waLink = document.getElementById('whatsapp-link');
+      waLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.open(whatsappUrl, '_blank');
+      });
+      
+    }, 3500);
   }
 }
 

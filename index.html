@@ -29,7 +29,7 @@
 
       <main class="hero">
         <div class="profile-section">
-          <div class="location-tag">
+          <div class="location-tag" id="location-tag">
             <i class="ph-fill ph-map-pin" style="color: #ff4757;"></i>
             <span>Santa Inês - MA</span>
             <i class="ph ph-caret-down" style="font-size: 0.7rem; opacity: 0.7;"></i>
@@ -45,9 +45,12 @@
               <img src="/verify.png" alt="Verificado">
             </div>
           </div>
-          <h2 class="profile-name">Marido de aluguel</h2>
-          <p class="profile-bio">Todo serviço que você precisa, sem estresse</p>
+          <h2 class="profile-name" id="profile-name">Marido de aluguel</h2>
+          <p class="profile-bio" id="profile-bio">Todo serviço que você precisa, sem estresse</p>
         </div>
+        
+        <!-- NEW CHAT HISTORY CONTAINER -->
+        <div class="chat-history hidden" id="chat-history"></div>
         
         <div class="input-card">
             <textarea class="hero-textarea" id="hero-textarea" placeholder="Peça à Lovable para criar um blog sobre..." rows="2"></textarea>
