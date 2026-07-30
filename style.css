@@ -305,13 +305,20 @@ header {
 }
 
 .marquee-content {
-  display: inline-block;
-  white-space: nowrap;
+  display: flex;
+  gap: 0.6rem;
+  width: max-content;
   animation: scroll-marquee 40s linear infinite;
-  color: #737373; /* Subtle grey like placeholder */
-  font-size: 0.85rem;
-  font-weight: 500;
   user-select: none;
+}
+
+.service-pill {
+  padding: 0.2rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: #a3a3a3;
+  white-space: nowrap;
 }
 
 @keyframes scroll-marquee {
