@@ -4,26 +4,40 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MVP SaaS - Minimalista</title>
+    <title>Lovable MVP</title>
     <!-- Phosphor Icons for modern UI icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
+    <!-- CSS Animated Gradient Background (Lovable Style) -->
+    <div class="bg-gradient-container">
+      <div class="bg-blob bg-blue-left"></div>
+      <div class="bg-blob bg-blue-right"></div>
+      <div class="bg-blob bg-pink-bottom"></div>
+      <div class="bg-dark-center"></div>
+    </div>
+
     <!-- UI Overlay -->
     <div id="app">
       <header>
         <div class="logo-container">
           <i class="ph-fill ph-heart" style="color: #ff4757; font-size: 1.5rem;"></i>
-          <span>Lovable MVP</span>
+          <span>Lovable</span>
         </div>
       </header>
 
       <main class="hero">
-        <h1 class="kimi-title">KIMI</h1>
+        <div class="badge-pill">
+          <span class="badge-new">Novo</span>
+          <span>Aplicativos adoráveis agora funcionam no ChatGPT e no Claude.</span>
+          <i class="ph ph-arrow-right"></i>
+        </div>
+
+        <h1 class="hero-title">Pronto para construir, Karol?</h1>
         
         <div class="input-card">
-          <textarea class="hero-textarea" placeholder="Pergunte qualquer coisa..." rows="4"></textarea>
+          <textarea class="hero-textarea" placeholder="Ask Lovable to create an internal tool that..." rows="3"></textarea>
           
           <div class="input-actions">
             <button class="icon-btn action-left">
@@ -31,31 +45,15 @@
             </button>
             <div class="actions-right">
               <button class="build-btn">
-                Instantâneo <span class="highlight">Alto</span> <i class="ph ph-caret-down" style="font-size: 0.8rem;"></i>
+                Plano <i class="ph ph-caret-down" style="font-size: 0.8rem;"></i>
               </button>
-              <button class="icon-btn submit-btn">
-                <i class="ph ph-arrow-up" style="font-size: 1.1rem; color: #fff;"></i>
+              <button class="icon-btn">
+                <i class="ph ph-microphone" style="font-size: 1.2rem;"></i>
               </button>
             </div>
           </div>
         </div>
-
-        <div class="suggestion-chips">
-          <button class="chip"><i class="ph ph-git-branch"></i> Cluster</button>
-          <button class="chip"><i class="ph ph-presentation-chart"></i> Slides</button>
-          <button class="chip"><i class="ph ph-magnifying-glass"></i> Pesquisa aprofundada</button>
-          <button class="chip"><i class="ph ph-globe"></i> Sites</button>
-          <button class="chip"><i class="ph ph-file-text"></i> Documentos</button>
-          <button class="chip"><i class="ph ph-table"></i> Planilhas</button>
-        </div>
       </main>
-      
-      <footer class="footer-inspirations">
-        <button class="inspiration-btn">
-          <span><i class="ph ph-lightbulb"></i> Explorar inspirações</span>
-          <span class="role-text">Role para explorar <i class="ph ph-caret-up"></i></span>
-        </button>
-      </footer>
     </div>
     <script type="module" src="/main.js"></script>
   </body>
