@@ -34,7 +34,7 @@
             <span>Santa Inês - MA</span>
             <i class="ph ph-caret-down" style="font-size: 0.7rem; opacity: 0.7;"></i>
           </div>
-          <div class="profile-avatar-wrapper">
+          <div class="profile-avatar-wrapper" id="open-stories" style="cursor: pointer;">
             <div class="profile-ring">
               <div class="profile-picture">
                 <img src="/Perfil.webp" alt="Marido de aluguel" />
@@ -92,5 +92,30 @@
       </main>
     </div>
     <script type="module" src="/main.js"></script>
+
+    <!-- Stories Modal -->
+    <div id="stories-modal" class="stories-modal hidden">
+      <div class="stories-progress-container">
+        <div class="story-progress"><div class="progress-fill"></div></div>
+        <div class="story-progress"><div class="progress-fill"></div></div>
+        <div class="story-progress"><div class="progress-fill"></div></div>
+        <div class="story-progress"><div class="progress-fill"></div></div>
+        <div class="story-progress"><div class="progress-fill"></div></div>
+      </div>
+      <div class="stories-header">
+        <div class="stories-user-info">
+          <img src="/Perfil.webp" alt="Avatar" class="stories-avatar">
+          <span class="stories-username">Marido de aluguel</span>
+        </div>
+        <button id="close-stories" class="icon-btn stories-close">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+      <div class="stories-image-container">
+        <img id="story-image" src="/HISTORY1.jpg" alt="Story">
+        <div id="story-tap-left" class="tap-zone left-zone"></div>
+        <div id="story-tap-right" class="tap-zone right-zone"></div>
+      </div>
+    </div>
   </body>
 </html>

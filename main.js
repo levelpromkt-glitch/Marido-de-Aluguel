@@ -80,3 +80,97 @@ inputField.addEventListener('blur', () => {
     inputField.setAttribute('placeholder', '');
   }
 });
+
+// ----------------------------------------------------
+// STORIES LOGIC
+// ----------------------------------------------------
+const storiesImages = [
+  '/HISTORY1.jpg',
+  '/HISTORY2.jpg',
+  '/HISTORY3.jpg',
+  '/HISTORY4.jpg',
+  '/HISTORY5.jpg'
+];
+
+let currentStoryIndex = 0;
+let storyTimer;
+const STORY_DURATION = 5000; // 5 seconds per story
+
+const openStoriesBtn = document.getElementById('open-stories');
+const closeStoriesBtn = document.getElementById('close-stories');
+const storiesModal = document.getElementById('stories-modal');
+const storyImage = document.getElementById('story-image');
+const tapLeft = document.getElementById('story-tap-left');
+const tapRight = document.getElementById('story-tap-right');
+const progressFills = document.querySelectorAll('.progress-fill');
+
+function openStories() {
+  currentStoryIndex = 0;
+  storiesModal.classList.remove('hidden');
+  showStory(currentStoryIndex);
+}
+
+function closeStories() {
+  storiesModal.classList.add('hidden');
+  clearTimeout(storyTimer);
+  resetProgressBars();
+}
+
+function resetProgressBars() {
+  progressFills.forEach(fill => {
+    fill.style.width = '0%';
+    fill.style.transition = 'none';
+  });
+}
+
+function showStory(index) {
+  if (index < 0) {
+    index = 0;
+  }
+  if (index >= storiesImages.length) {
+    closeStories();
+    return;
+  }
+  
+  currentStoryIndex = index;
+  storyImage.src = storiesImages[currentStoryIndex];
+  
+  // Fill previous bars completely, empty next ones
+  progressFills.forEach((fill, i) => {
+    fill.style.transition = 'none';
+    if (i < currentStoryIndex) {
+      fill.style.width = '100%';
+    } else if (i > currentStoryIndex) {
+      fill.style.width = '0%';
+    }
+  });
+
+  // Start progress bar for current story
+  const currentFill = progressFills[currentStoryIndex];
+  currentFill.style.width = '0%';
+  
+  // Force reflow for css transition to work
+  void currentFill.offsetWidth;
+  
+  // Animate current bar
+  currentFill.style.transition = `width ${STORY_DURATION}ms linear`;
+  currentFill.style.width = '100%';
+
+  clearTimeout(storyTimer);
+  storyTimer = setTimeout(() => {
+    showStory(currentStoryIndex + 1);
+  }, STORY_DURATION);
+}
+
+openStoriesBtn.addEventListener('click', openStories);
+closeStoriesBtn.addEventListener('click', closeStories);
+
+tapLeft.addEventListener('click', (e) => {
+  e.stopPropagation();
+  showStory(currentStoryIndex - 1);
+});
+
+tapRight.addEventListener('click', (e) => {
+  e.stopPropagation();
+  showStory(currentStoryIndex + 1);
+});
