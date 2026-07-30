@@ -102,6 +102,8 @@ const storiesModal = document.getElementById('stories-modal');
 const storyImage = document.getElementById('story-image');
 const tapLeft = document.getElementById('story-tap-left');
 const tapRight = document.getElementById('story-tap-right');
+const navPrev = document.getElementById('story-nav-prev');
+const navNext = document.getElementById('story-nav-next');
 const progressFills = document.querySelectorAll('.progress-fill');
 
 function openStories() {
@@ -171,6 +173,16 @@ tapLeft.addEventListener('click', (e) => {
 });
 
 tapRight.addEventListener('click', (e) => {
+  e.stopPropagation();
+  showStory(currentStoryIndex + 1);
+});
+
+navPrev.addEventListener('click', (e) => {
+  e.stopPropagation();
+  showStory(currentStoryIndex - 1);
+});
+
+navNext.addEventListener('click', (e) => {
   e.stopPropagation();
   showStory(currentStoryIndex + 1);
 });

@@ -95,27 +95,37 @@
 
     <!-- Stories Modal -->
     <div id="stories-modal" class="stories-modal hidden">
-      <div class="stories-progress-container">
-        <div class="story-progress"><div class="progress-fill"></div></div>
-        <div class="story-progress"><div class="progress-fill"></div></div>
-        <div class="story-progress"><div class="progress-fill"></div></div>
-        <div class="story-progress"><div class="progress-fill"></div></div>
-        <div class="story-progress"><div class="progress-fill"></div></div>
-      </div>
-      <div class="stories-header">
-        <div class="stories-user-info">
-          <img src="/Perfil.webp" alt="Avatar" class="stories-avatar">
-          <span class="stories-username">Marido de aluguel</span>
+      <button class="story-nav-btn prev-btn" id="story-nav-prev">
+        <i class="ph ph-caret-left" style="font-size: 1.5rem;"></i>
+      </button>
+
+      <div class="story-content-wrapper">
+        <div class="stories-progress-container">
+          <div class="story-progress"><div class="progress-fill"></div></div>
+          <div class="story-progress"><div class="progress-fill"></div></div>
+          <div class="story-progress"><div class="progress-fill"></div></div>
+          <div class="story-progress"><div class="progress-fill"></div></div>
+          <div class="story-progress"><div class="progress-fill"></div></div>
         </div>
-        <button id="close-stories" class="icon-btn stories-close">
-          <i class="ph ph-x"></i>
-        </button>
+        <div class="stories-header">
+          <div class="stories-user-info">
+            <img src="/Perfil.webp" alt="Avatar" class="stories-avatar">
+            <span class="stories-username">Marido de aluguel</span>
+          </div>
+          <button id="close-stories" class="icon-btn stories-close">
+            <i class="ph ph-x"></i>
+          </button>
+        </div>
+        <div class="stories-image-container">
+          <img id="story-image" src="/HISTORY1.jpg" alt="Story">
+          <div id="story-tap-left" class="tap-zone left-zone"></div>
+          <div id="story-tap-right" class="tap-zone right-zone"></div>
+        </div>
       </div>
-      <div class="stories-image-container">
-        <img id="story-image" src="/HISTORY1.jpg" alt="Story">
-        <div id="story-tap-left" class="tap-zone left-zone"></div>
-        <div id="story-tap-right" class="tap-zone right-zone"></div>
-      </div>
+
+      <button class="story-nav-btn next-btn" id="story-nav-next">
+        <i class="ph ph-caret-right" style="font-size: 1.5rem;"></i>
+      </button>
     </div>
   </body>
 </html>
