@@ -150,6 +150,11 @@ header {
   border-radius: 50%;
   display: inline-block;
   box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  animation: spin-ring 4s linear infinite;
+}
+
+@keyframes spin-ring {
+  100% { transform: rotate(360deg); }
 }
 
 .profile-picture {
@@ -162,6 +167,11 @@ header {
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  animation: counter-spin-ring 4s linear infinite;
+}
+
+@keyframes counter-spin-ring {
+  100% { transform: rotate(-360deg); }
 }
 
 .profile-picture img {
